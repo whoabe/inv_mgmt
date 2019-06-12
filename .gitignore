@@ -1,0 +1,6 @@
+touch .gitignore
+echo ".env" > .gitignore 
+# open up .gitignore in VSCode and add whatever else necessary `*.DS_Store, .vscode, *__pycache__
+touch .env
+git add .gitignore
+git commit -m "added git ignore"
