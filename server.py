@@ -1,7 +1,11 @@
 import peeweedbevolve
-from flask import Flask, render_template, request
-from models import db
+from flask import Flask, render_template, request, flash, redirect, url_for
+from models import db, Store
+import os
+
 app = Flask(__name__)
+
+app.secret_key = os.getenv('secret_key')
 
 @app.before_request
 def before_request():
@@ -20,5 +24,20 @@ def migrate():
 def index():
     return render_template('index.html')
 
+@app.route("/store")
+def store():
+    return render_template('store.html')
+
+@app.route("/store_form")
+def store_form():
+    s = Store(name=request.args['name'])
+    #s is equal to the class with the name from the html button
+
+    if s.save():
+        flash("flash saved")
+        return redirect(url_for('store'))
+    else:
+        return render_template('store.html', name=request.args['name]'])
+
 if __name__ == '__main__':
-    app.run()
+   app.run()
