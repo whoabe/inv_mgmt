@@ -28,10 +28,11 @@ def index():
 def store():
     return render_template('store.html')
 
-@app.route("/store_form")
-def store_form():
-    s = Store(name=request.args['name'])
+@app.route("/store_form", methods = ["POST"])
+def create():
+    s = Store(name=request.form['name'])
     #s is equal to the class with the name from the html button
+    #pulling the informatino from form, not args
 
     if s.save():
         flash("flash saved")
