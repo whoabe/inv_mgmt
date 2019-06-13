@@ -61,5 +61,12 @@ def w_create():
     else:
         return render_template('warehouse.html', name=request.args['location]'])        
 
+
+@app.route("/stores")
+def show_stores():
+    stores  = Store.select() #passing stores from the database into 
+    warehouses = Warehouse.select()
+    return render_template('stores.html', stores = stores, warehouses = warehouses)
+
 if __name__ == '__main__':
    app.run()
