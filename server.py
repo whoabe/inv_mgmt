@@ -68,5 +68,38 @@ def show_stores():
     warehouses = Warehouse.select()
     return render_template('stores.html', stores = stores, warehouses = warehouses)
 
+@app.route("/stores/delete/<id>", methods = ["POST"])
+def destroy(id):
+    # breakpoint()
+    x = Store.get_by_id(id)
+    
+    #can use delete or delete instance
+
+    if x.delete_instance():
+        flash("Store deleted")
+        return redirect(url_for('show_stores'))
+    else:
+        return render_template('stores.html')
+
+@app.route("/store/<id>")
+def show_stores_about(id):
+    store = Store.get_by_id(id)
+    #can have the 
+    return render_template('stores_about.html', store = store)
+
+@app.route("/store/<id>/edit", methods = ["POST"])
+def edit(id):
+    s = Store.update(name=request.form['name']).where(Store.id == id)
+
+    #s is equal to the class with the name from the html button
+    #pulling the informatino from form, not args
+
+    if s.execute():
+        flash("flash saved")
+        return redirect(url_for('stores_about'))
+    else:
+        return render_template('store.html', name=request.args['name]'])
+
+
 if __name__ == '__main__':
    app.run()

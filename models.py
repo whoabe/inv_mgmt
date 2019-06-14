@@ -21,11 +21,12 @@ class Store(BaseModel):
    name = pw.CharField(unique=True)
 
 class Warehouse(BaseModel):
-   store = pw.ForeignKeyField(Store, backref='warehouses', unique=True)
+   store = pw.ForeignKeyField(Store, backref='warehouses', on_delete='cascade')
+   # took out unique = True
    location = pw.TextField()
 
 class Product(BaseModel):
    name = pw.CharField(index=True)
    description = pw.TextField()
-   warehouse = pw.ForeignKeyField(Warehouse, backref='products')
+   warehouse = pw.ForeignKeyField(Warehouse, backref='products', on_delete='cascade')
    color = pw.CharField(null=True)

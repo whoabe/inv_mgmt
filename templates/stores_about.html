@@ -1,0 +1,32 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+<!-- Flash messages -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<!--  -->
+
+<h1>{{store.name}}</h1>
+<p>Number of Warehouses</p>
+<p>{{store.warehouses|length}}</p>
+
+<form action="{{ url_for('edit',id=store.id) }}" method="POST">
+    <!-- need to pass in the id into this form action in order to form to direct it to the correct url. otherwise, the form doesnt know which url to go to -->
+    <div class="form-group">
+    <label for="store_name">Store Name:</label>
+      <input type='text' name='name' class="form-control" value="{{store.name}}"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Edit Store</button>
+
+</form>
+
+{% endblock %}
+

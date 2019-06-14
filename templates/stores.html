@@ -1,5 +1,18 @@
 {% extends "_layout.html" %}
 {% block content %}
+
+<!-- Flash messages -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<!--  -->
+
 <h1>Stores</h1>
 
 <table style="width:100%">
@@ -13,9 +26,27 @@
                 <td>{{store.name}}</td>
                 <td>{{store.warehouses|length}}</td>
               <!-- can use prefetch to make the access of the warehouse length faster.  -->
+                <td>
+                    <!-- delete button -->
+                    <form action="{{ url_for('destroy', id=store.id) }}" method="POST">
+                            <!-- need to pass in the id into this form action in order to form to direct it to the correct url. otherwise, the form doesnt know which url to go to -->
+                            <!-- <div class="form-group">
+                            <label for="store_name"></label>
+                                <input type='text' name='name' class="form-control" value="{{store.name}}"/>
+                            </div> -->
+                        
+                            <button type="submit" class="btn btn-primary">Delete Store</button>
+                        
+                        </form>
+
+
+
+                </td>
             </tr>
         {% endfor %}
         </tr> 
       </table>
+
+
 
 {% endblock %}
