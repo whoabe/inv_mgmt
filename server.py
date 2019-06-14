@@ -36,9 +36,10 @@ def create():
 
     if s.save():
         flash("flash saved")
-        return redirect(url_for('store'))
+        return redirect(url_for('store', id = s.id))
     else:
-        return render_template('store.html', name=request.args['name]'])
+        flash("error")
+        return render_template('store.html', name=request.form['name'], errors=s.errors)
 
 
 
